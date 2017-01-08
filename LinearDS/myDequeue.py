@@ -13,8 +13,3 @@ class Dequeue:
         return self.s==[]
     def size(self):
         return len(self.s)
-
-m=Dequeue()
-m.addFront(4)
-m.addRear(5)
-print(m.removeFront())
