@@ -15,7 +15,7 @@ class Fraction:
     def __add__(self,other):
         newnum=self.num*other.den+self.den*other.num
         newden=self.den*other.den
-	common=gcd(newnum,newden)
+        common=gcd(newnum,newden)
         return Fraction(newnum//common,newden//common)
     def __eq__(self,other):
         firstnum=self.num*other.den
@@ -30,8 +30,7 @@ class Fraction:
         secondnum=other.num*self.den
         return(firstnum<secondnum)
 
-myFrac=Fraction(3,5)
-myFrac1=Fraction(5,4)+Fraction(3,4)
-Frac2=Fraction(3,5)
-Frac3=Fraction(7,10)
-print(Frac2<Frac3)
+myFrac=Fraction(105,810)
+myFrac1=Fraction(91,270)
+print(myFrac+myFrac1)
+
