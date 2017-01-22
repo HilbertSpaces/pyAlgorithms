@@ -30,7 +30,7 @@ class Fraction:
         secondnum=other.num*self.den
         return(firstnum<secondnum)
 
-myFrac=Fraction(105,810)
-myFrac1=Fraction(91,270)
+myFrac=Fraction(10,63)
+myFrac1=Fraction(4,18)
 print(myFrac+myFrac1)
 

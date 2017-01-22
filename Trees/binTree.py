@@ -25,3 +25,23 @@ class BinaryTree:
         self.key=obj
     def getRootVal(self):
         return self.key
+    def getRoot(self):
+        return self
+
+def preorder(tree):
+    if tree:
+        print(tree.getRootVal())
+        preorder(tree.getLeftChild())
+        preorder(tree.getRightChild())
+tree=BinaryTree('Book')
+tree.insertLeft('Chapter1')
+tree.insertRight('Chapter2')
+tree.getLeftChild().insertLeft('Section1.1')
+tree.getLeftChild().insertRight('Section1.2')
+tree.getLeftChild().getRightChild().insertLeft('Section1.2.1')
+tree.getLeftChild().getRightChild().insertRight('Section1.2.2')
+tree.getRightChild().insertLeft('Section2.1')
+tree.getRightChild().insertRight('Section2.2')
+tree.getRightChild().getRightChild().insertLeft('Section2.2.1')
+tree.getRightChild().getRightChild().insertRight('Section2.2.2')
+preorder(tree)
