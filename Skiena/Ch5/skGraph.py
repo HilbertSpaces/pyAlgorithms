@@ -1,4 +1,13 @@
 #Skiena Graph Design
+class Queue:
+    def __init__(self):
+        self.q=[]
+    def enqueue(self,node):
+        self.q.append(node)
+    def dequeue(self):
+        return self.q.pop(0)
+    def notEmpty(self):
+        return not self.q==[]
 class node:
     def __init__(self,y):
         self.y=y
@@ -16,11 +25,16 @@ class edgenode:
         self.head=temp
     def grab(self):
         return self.head
+    def printOut(self):
+        content=self.head
+        while content.next!=None:
+            print(content.y)
+            content=content.next
 class graph:
     def __init__(self,direct,vertices,edges):
         self.nedges=edges
         self.directed=direct
-        self.nvertices=vertices
+        self.nvertices=vertices+1
         self.edges=[None]*(edges+1)
         self.degree=[0]*(vertices+1)
     def insert_edge(self,x,y):
@@ -40,7 +54,7 @@ class graph:
         else:
             self.nedges+=1
     def print_graph(self):
-        for i in range(1,self.nvertices+1):
+        for i in range(1,self.nvertices):
             try:
                 p=self.edges[i].head
             except:
@@ -48,10 +62,37 @@ class graph:
             while(p is not None):
                 print(i,p.y)
                 p=p.getNext()
+    def BFS(self,s):
+        state=["hold"]
+        p=["hold"]
+        for i in range(1,self.nvertices):
+            state.append("undiscovered")
+            p.append(None)
+        state[s]="discovered"
+        p[s]=None
+        Q=Queue()
+        Q.enqueue(s)
+        print(Q.notEmpty())
+        while Q.notEmpty():
+            u=Q.dequeue()
+            try:
+                x=self.edges[u].head
+            except:
+                continue
+            while x is not None:
+                print("Edge, "+str(u)+" "+str(x.y))
+                if state[x.y]=="undiscovered":
+                    state[x.y]="discovered"
+                    p[x.y]=u
+                    Q.enqueue(x.y)
+                x=x.next
+                state[u]="processed"
+
 
 g=graph(True,4,4)
 g.insert_edge(1,3)
-g.insert_edge(2,1)
+g.insert_edge(2,3)
+g.insert_edge(3,4)
 g.insert_edge(1,2)
 g.insert_edge(1,4)
-g.print_graph()
+g.BFS(1)
