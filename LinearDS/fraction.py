@@ -21,16 +21,18 @@ class Fraction:
         firstnum=self.num*other.den
         secondnum=other.num*self.den
         return firstnum==secondnum
-    def __multiply__(self,other):
+    def __mul__(self,other):
         newnum=self.num*other.num
         newden=self.den*other.den
-        return Fraction(newnum,newden)
+        common=gcd(newnum,newden)
+        return Fraction(newnum//common,newden//common)
+    __rmul__=__mul__
     def __lt__(self,other):
         firstnum=self.num*other.den
         secondnum=other.num*self.den
         return(firstnum<secondnum)
 
-myFrac=Fraction(10,63)
-myFrac1=Fraction(4,18)
-print(myFrac+myFrac1)
-
+myFrac1=Fraction(10,63)
+myFrac2=Fraction(8,63)
+myFrac3=Fraction(5,42)
+print(myFrac1+myFrac2+myFrac3)
