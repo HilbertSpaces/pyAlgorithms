@@ -8,6 +8,15 @@ class Queue:
         return self.q.pop(0)
     def notEmpty(self):
         return not self.q==[]
+class Stack:
+    def __init__(self):
+        self.s=[]
+    def push(self,vert):
+        self.s.append(vert)
+    def pop(self):
+        return self.s.pop()
+    def notEmpty(self):
+        return not self.s==[]
 class node:
     def __init__(self,y):
         self.y=y
@@ -30,6 +39,15 @@ class edgenode:
         while content.next!=None:
             print(content.y)
             content=content.next
+    def reverse(self):
+        prev=None
+        current=self.head
+        while current is not None:
+            temp=current.next
+            current.next=prev
+            prev=current
+            current=temp
+        self.head=prev
 class graph:
     def __init__(self,direct,vertices,edges):
         self.nedges=edges
@@ -80,19 +98,51 @@ class graph:
             except:
                 continue
             while x is not None:
-                print("Edge, "+str(u)+" "+str(x.y))
                 if state[x.y]=="undiscovered":
+                    print("Edge, "+str(u)+" "+str(x.y))
                     state[x.y]="discovered"
                     p[x.y]=u
                     Q.enqueue(x.y)
                 x=x.next
                 state[u]="processed"
-
-
-g=graph(True,4,4)
-g.insert_edge(1,3)
-g.insert_edge(2,3)
-g.insert_edge(3,4)
+        print(p)
+    def DFS(self,s):
+        time=0
+        p=[0]*self.nvertices
+        state=["undiscovered"]*self.nvertices
+        entry=[0]*self.nvertices
+        exit=[0]*self.nvertices
+        S=Stack()
+        S.push(s)
+        save=s
+        while S.notEmpty():
+            time+=1
+            u=S.pop()
+            entry[u]=time
+            if state[u]=="undiscovered":
+                state[u]="discovered"
+                print(p[u],u)
+            try:
+                x=self.edges[u].head
+            except:
+                continue
+            while x is not None:
+                S.push(x.y)
+                if state[x.y]=="undiscovered":
+                    p[x.y]=u
+                x=x.next
+            state[u]="processed"
+            exit[u]=time
+            time+=1
+        print(p)
+        print(entry)
+        print(exit)
+g=graph(True,8,7)
 g.insert_edge(1,2)
-g.insert_edge(1,4)
+g.insert_edge(2,6)
+g.insert_edge(6,7)
+g.insert_edge(7,4)
+g.insert_edge(1,3)
+g.insert_edge(1,5)
 g.BFS(1)
+g.DFS(1)
