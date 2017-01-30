@@ -90,7 +90,6 @@ class graph:
         p[s]=None
         Q=Queue()
         Q.enqueue(s)
-        print(Q.notEmpty())
         while Q.notEmpty():
             u=Q.dequeue()
             try:
@@ -106,7 +105,7 @@ class graph:
                 x=x.next
                 state[u]="processed"
         print(p)
-    def DFS(self,s):
+    def iDFS(self,s):
         time=0
         p=[0]*self.nvertices
         state=["undiscovered"]*self.nvertices
@@ -137,6 +136,33 @@ class graph:
         print(p)
         print(entry)
         print(exit)
+    def DFS(self,s,time=None,exit=None,entry=None,state=None,p=None):
+        if entry==None:
+            entry=[0]*self.nvertices
+        if exit==None:
+            exit=[0]*self.nvertices
+        if state==None:
+            state=["undiscovered"]*self.nvertices
+        if p==None:
+            p=[0]*self.nvertices
+        if time==None:
+            time=0
+        entry[s]=time
+        state[s]="discovered"
+        time+=1
+        try:
+            x=self.edges[s].head
+        except:
+            return 
+        while x is not None:
+            p[x.y]=s
+            print(s,x.y)
+            if state[x.y]=="undiscovered":
+                self.DFS(x.y,time,exit,entry,state,p)
+            x=x.next
+        state[s]="processed"
+        exit[s]=time
+        time+=1
 g=graph(True,8,7)
 g.insert_edge(1,2)
 g.insert_edge(2,6)
