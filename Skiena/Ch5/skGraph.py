@@ -17,6 +17,8 @@ class Stack:
         return self.s.pop()
     def notEmpty(self):
         return not self.s==[]
+    def printStack(self):
+        print(self.s)
 class node:
     def __init__(self,y):
         self.y=y
@@ -55,6 +57,8 @@ class graph:
         self.nvertices=vertices+1
         self.edges=[None]*(edges+1)
         self.degree=[0]*(vertices+1)
+        self.discovered=[False]*self.nvertices
+        self.topSorted=Stack()
     def insert_edge(self,x,y):
         if self.edges[x] is None:
             e=edgenode()
@@ -107,8 +111,10 @@ class graph:
         print(p)
     def iDFS(self,s):
         time=0
+        topSorted=Stack()
         p=[0]*self.nvertices
         state=["undiscovered"]*self.nvertices
+        discovered=[False]*self.nvertices
         entry=[0]*self.nvertices
         exit=[0]*self.nvertices
         S=Stack()
@@ -149,6 +155,8 @@ class graph:
             time=0
         entry[s]=time
         state[s]="discovered"
+        self.topSorted.push(s)
+        self.discovered[s]=True
         time+=1
         try:
             x=self.edges[s].head
@@ -156,19 +164,27 @@ class graph:
             return 
         while x is not None:
             p[x.y]=s
-            print(s,x.y)
+            print(s,x.y,p)
             if state[x.y]=="undiscovered":
                 self.DFS(x.y,time,exit,entry,state,p)
             x=x.next
         state[s]="processed"
         exit[s]=time
         time+=1
-g=graph(True,8,7)
+    def topsort(self):
+        for i in range(1,self.nvertices):
+            if (self.discovered[i]==False):
+                self.DFS(i)
+        self.topSorted.printStack()
+g=graph(True,7,7)
 g.insert_edge(1,2)
 g.insert_edge(2,6)
 g.insert_edge(6,7)
 g.insert_edge(7,4)
 g.insert_edge(1,3)
 g.insert_edge(1,5)
-g.BFS(1)
-g.DFS(1)
+g.topsort()
+h=graph(True,3,3)
+h.insert_edge(1,2)
+h.insert_edge(2,3)
+h.topsort()
