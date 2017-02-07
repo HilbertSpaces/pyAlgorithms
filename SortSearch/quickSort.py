@@ -5,13 +5,9 @@ def partition(A,l,r):
     print(A)
     for j in range(l+1,r):
         if A[j]<p:
-            save=A[i]
-            A[i]=A[j]
-            A[j]=save
+            A[i],A[j]=A[j],A[i]
             i+=1
-    save=A[i-1]
-    A[i-1]=A[l]
-    A[l]=save
+    A[i-1],A[l]=A[l],A[i-1]
     return i-1
 def quickSort(A,n):
     if n>1:
