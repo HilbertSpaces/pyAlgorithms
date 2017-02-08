@@ -8,7 +8,6 @@ def partition(A,l,r):
     p=A[l]
     i=l+1
     B+=len(A)-1
-    print(B)
     for j in range(l+1,r):
         if A[j]<p:
             A[i],A[j]=A[j],A[i]
@@ -42,12 +41,14 @@ def quickSort(A,n):
         N=A[split+1:]
         quickSort(M,len(M))
         quickSort(N,len(N))
-    return B
+    return A,B
 
 with open('stanfordArray.txt') as f:
     content=f.readlines()
 A=([int(x.strip()) for x in content])
 R=np.array(A)
 total=quickSort(R,len(R))
+R=total[0]
+switches=total[1]
 A=R.tolist()
-print(B)
+print(A)
